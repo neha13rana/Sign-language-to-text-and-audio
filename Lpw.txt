@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>  
+using namespace std;  
+  
+// initializing coins array 
+int coins[] = { 10, 25, 5 }; 
+// array for memoization technique
+int dp[1000] = { 0 }; 
+
+
+// Here, N is sum and M is total_coins 
+int minCoins(int N, int M)  
+{  
+  
+    for (int i = 0; i <= N; i++)
+    {  
+        // Initializing all dp[] value to INT_MAX
+        dp[i] = INT_MAX;  
+    }
+// Base case if sum = zero means rupees = 0
+    dp[0] = 0;  
+  
+    // outer loop denotes possible values of sum between 1 to N  
+    for (int i = 1; i <= N; i++) {  
+        //Inner loop denotes index of coin array.   
+        for (int j = 0; j < M; j++) {    
+            if (coins[j] <= i) {  
+                //Solution might have the newly added coin  
+                dp[i] = min(dp[i], 1 + dp[i - coins[j]]);  
+            }  
+        }  
+    }  
+    return dp[N];  
+}  
+  
+int main()  
+{  
+  
+    int sum = 30; 
+    int total_coins = 3; 
+    cout << "Minimum number of coins needed are " << minCoins(sum, total_coins);  
+}  
+
